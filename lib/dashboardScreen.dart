@@ -1,5 +1,5 @@
-import 'package:debtrackr/utils/DashboardCashWidget.dart';
-import 'package:debtrackr/utils/RoundActionButton.dart';
+import 'package:debtrackr/widgets/DashboardCashWidget.dart';
+import 'package:debtrackr/widgets/RoundActionButton.dart';
 import 'package:flutter/material.dart';
 
 class DashBoardScreen extends StatefulWidget {
