@@ -1,26 +1,22 @@
-class Note {
-  final int id;
+
+class Note{
+  final int? id;
   final String title;
   final String description;
-  final String amount;
+  final int amount;
+  const Note({required this.title, required this.description, this.id , required this.amount});
 
-  const Note(
-      {required this.amount,
-      required this.description,
-      required this.id,
-      required this.title});
+  factory Note.fromJson(Map<String,dynamic> json) => Note(
+    id: json['id'],
+    amount: json['amount'],
+    title: json['title'],
+    description: json['description']
+  );
 
-  factory Note.fromJson(Map<String, dynamic> json) => Note(
-        amount: json['amount'],
-        description: json['description'],
-        id: json['id'],
-        title: json['title'],
-      );
-
-  Map<String , dynamic> toJson() => {
-    'id' : id,
-    'title' : title,
-    'description' : description,
-    'amount' : amount
+  Map<String,dynamic> toJson() => {
+    'id': id,
+    'amount': amount,
+    'title': title,
+    'description': description
   };
 }

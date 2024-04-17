@@ -2,23 +2,38 @@ import 'package:debtrackr/DataModel/note_model.dart';
 import 'package:debtrackr/services/database_helper.dart';
 import 'package:flutter/material.dart';
 
-class NoteScreen extends StatelessWidget {
+class NoteScreen extends StatefulWidget {
   final Note? note;
   const NoteScreen({super.key, this.note});
 
   @override
-  Widget build(BuildContext context) {
-    final titleController = TextEditingController();
-    final amountController = TextEditingController();
-    final descriptionController = TextEditingController();
+  State<NoteScreen> createState() => _NoteScreenState();
+}
 
-    if (note != null) {
-      titleController.text = note!.title;
-      descriptionController.text = note!.description;
+class _NoteScreenState extends State<NoteScreen> {
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final amountController = TextEditingController();
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int? numberValue;
+    if (widget.note != null) {
+      titleController.text = widget.note!.title;
+      descriptionController.text = widget.note!.description;
+      amountController.text = widget.note!.amount.toString();
     }
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(note == null ? 'Add a note' : 'Edit Note'),
+        title: Text(widget.note == null ? 'Add a note' : 'Edit note'),
         centerTitle: true,
       ),
       body: Padding(
@@ -26,84 +41,129 @@ class NoteScreen extends StatelessWidget {
         child: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(bottom: 40.0),
+              padding: EdgeInsets.only(bottom: 33.9),
               child: Center(
                 child: Text(
-                  ' What are you thinking about?',
+                  'What are you thinking about?',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(bottom: 40.0),
-              child: TextFormField(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: TextField(
+                onChanged: (value) {
+                  setState(() {
+                    titleController.text = value;
+                  });
+                },
                 controller: titleController,
                 maxLines: 1,
                 decoration: const InputDecoration(
                     hintText: 'Title',
-                    labelText: 'Note Title',
+                    labelText: 'Credit title',
                     border: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.white, width: 0.75),
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 0.75,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ))),
               ),
             ),
-            TextFormField(
+            Padding(padding: const EdgeInsets.only(bottom: 20), child: TextField(
               controller: amountController,
               decoration: const InputDecoration(
-                  hintText: 'Type the amount',
-                  labelText: ' Amount to be credited',
+                  hintText: 'Type the note amount',
+                  labelText: 'Amount',
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.white,
                         width: 0.75,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ))),
               keyboardType: TextInputType.number,
-              onChanged: (int) {},
-            ),
-            TextFormField(
+              onChanged: (str) {
+                setState(() {
+                  print(str);
+                  amountController.text = str;
+                });
+              },
+            ),),
+            TextField(
               controller: descriptionController,
               decoration: const InputDecoration(
-                  hintText: 'Type The Note',
-                  labelText: ' Credit Description',
+                  hintText: 'Type here the note',
+                  labelText: 'Note description',
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.white,
                         width: 0.75,
                       ),
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)))),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10.0),
+                      ))),
               keyboardType: TextInputType.multiline,
-              onChanged: (str) {},
+              onChanged: (str) {
+                setState(() {
+                  descriptionController.text = str;
+                });
+              },
               maxLines: 5,
             ),
             const Spacer(),
             Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: 20.0),
               child: SizedBox(
                 height: 45,
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
                     onPressed: () async {
-                      final title = titleController.text;
-                      final description = descriptionController.text;
-                      final amount = amountController.text;
-                      if (title.isEmpty || description.isEmpty || amount.isEmpty) {
+                      String title = titleController.value.text;
+                      String description = descriptionController.value.text;
+                      String? numberText = amountController.text;
+                      if (numberText.isNotEmpty) {
+                        // Use int.parse() to convert the text to a double value
+                        numberValue = int.tryParse(numberText);
+                        print(numberValue);
+                      }
+
+                      if (title.isEmpty ||
+                          description.isEmpty ||
+                          numberValue == null) {
                         return;
                       }
-                      final Note model = Note(amount: amount, description: description, id: note!.id, title: title);
-                      if(note == null){
+
+                      final Note model = Note(
+                          title: title,
+                          description: description,
+                          id: widget.note?.id,
+                          amount: numberValue!.toInt());
+                      if (widget.note == null) {
                         await DatabaseHelper.addNote(model);
+                      } else {
+                        await DatabaseHelper.updateNote(model);
                       }
+
                       Navigator.pop(context);
                     },
                     style: ButtonStyle(
-                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            side: const BorderSide(
-                                color: Colors.white, width: 0.75)))),
-                    child: Text( note == null ? 
-                      'Save' : 'Edit',
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Color(0xFF1B1A55)),
+                        shape: MaterialStateProperty.all(
+                            const RoundedRectangleBorder(
+                                side: BorderSide(
+                                  color: Color(0xFF6940FF),
+                                  width: 0.75,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                )))),
+                    child: Text(
+                      widget.note == null ? 'Save' : 'Edit',
                       style: const TextStyle(fontSize: 20),
                     )),
               ),

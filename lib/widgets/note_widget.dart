@@ -19,28 +19,32 @@ class NoteWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 24),
         child: Card(
+          color: const Color.fromARGB(255, 180, 191, 255),
           elevation: 2,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Column(
               children: [
-                Align(alignment: Alignment.center,child: Text(note.title , style: const TextStyle( fontSize: 18 , fontWeight: FontWeight.w600 ),),),
+                Align(alignment: Alignment.center,child: Text(note.title , style: const TextStyle( color: Colors.black,fontSize: 18 , fontWeight: FontWeight.w600 ),),),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   child: Divider(
+                    color: Color(0xFF1B1A55),
                     thickness: 1,
                   ),
                 ),
-                Align(alignment: Alignment.center,child: Text(note.title , style: const TextStyle( fontSize: 18 , fontWeight: FontWeight.bold ),),),              
+                Text("₹ ${note.amount} ", style: const TextStyle(color: Color(0xFF1D7822) , fontWeight: FontWeight.bold , fontSize: 22),),
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   child: Divider(
+                    color: Color(0xFF1B1A55),
                     thickness: 1,
                   ),
                 ),
                 Text(
                   note.description,
                   style: const TextStyle(
+                    color: Colors.black,
                       fontSize: 16, fontWeight: FontWeight.w400),
                 )
               ],

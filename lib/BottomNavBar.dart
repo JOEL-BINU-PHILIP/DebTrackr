@@ -10,7 +10,7 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 1;
   static const List<Widget> _pages = [
-    CreditsScreen(),
+    NotesScreen(),
     DashBoardScreen(),
     DuesScreen()
   ];
@@ -41,7 +41,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ],
         currentIndex: _selectedIndex ,
-        selectedItemColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );

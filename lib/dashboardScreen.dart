@@ -1,6 +1,7 @@
 import 'package:debtrackr/widgets/DashboardCashWidget.dart';
 import 'package:debtrackr/widgets/RoundActionButton.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -13,7 +14,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  const Color.fromARGB(255, 0, 0, 0),
       body: SafeArea(
         child: Stack(
           children: [
@@ -26,9 +26,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   children: [
                     IconButton(
                       style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Color(0xFF1B1A55)),
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
-                            side: const BorderSide(width: 2 , color: Colors.white),
                             borderRadius: BorderRadius.circular(
                                 15.0), // Adjust border radius as needed
                           ),
@@ -37,7 +37,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       onPressed: () {},
                       icon: const Icon(
                         Icons.settings_outlined,
-                        size: 35,
+                        size: 32,
                         color: Colors.white,
                       ),
                     ),
@@ -53,8 +53,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: DashboardCashWidget(
-                    buttonColor: Color.fromARGB(255, 0, 203, 7),
-                    buttonBorderColor: Color.fromRGBO(102, 187, 106, 1),
+                    moneyTextColor: Color(0xFF00FF0D),
+                    buttonColor: Color(0xFF1B1A55),
+                    buttonBorderColor: Color(0xFF00FF0D),
                     buttonText: "Credits",
                   ),
                 ),
@@ -62,9 +63,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   padding:
                       EdgeInsets.only(left: 10, right: 10, top: 17, bottom: 10),
                   child: DashboardCashWidget(
-                    buttonColor: Color.fromARGB(232, 251, 1, 1),
+                    buttonColor: Color(0xFF1B1A55),
                     buttonBorderColor: Colors.redAccent,
                     buttonText: "Dues",
+                    moneyTextColor: Colors.redAccent,
                   ),
                 ),
                 const SizedBox(height: 30,),
