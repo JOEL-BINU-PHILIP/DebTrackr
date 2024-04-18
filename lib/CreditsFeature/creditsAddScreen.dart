@@ -2,6 +2,10 @@ import 'package:debtrackr/DataModel/note_model.dart';
 import 'package:debtrackr/services/database_helper.dart';
 import 'package:flutter/material.dart';
 
+String? title;
+String? amount;
+String? description;
+
 class NoteScreen extends StatefulWidget {
   final Note? note;
   const NoteScreen({super.key, this.note});
@@ -14,23 +18,25 @@ class _NoteScreenState extends State<NoteScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final amountController = TextEditingController();
+   @override
+  void initState() {
+    super.initState();
+    if (widget.note != null) {
+      titleController.text = widget.note!.title;
+      descriptionController.text = widget.note!.description;
+      amountController.text = widget.note!.amount.toString();
+    }
+  }
   @override
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
-    // TODO: implement dispose
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     int? numberValue;
-    if (widget.note != null) {
-      titleController.text = widget.note!.title;
-      descriptionController.text = widget.note!.description;
-      amountController.text = widget.note!.amount.toString();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.note == null ? 'Add a note' : 'Edit note'),
@@ -44,7 +50,7 @@ class _NoteScreenState extends State<NoteScreen> {
               padding: EdgeInsets.only(bottom: 33.9),
               child: Center(
                 child: Text(
-                  'What are you thinking about?',
+                  'What are you Credits',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -72,32 +78,34 @@ class _NoteScreenState extends State<NoteScreen> {
                         ))),
               ),
             ),
-            Padding(padding: const EdgeInsets.only(bottom: 20), child: TextField(
-              controller: amountController,
-              decoration: const InputDecoration(
-                  hintText: 'Type the note amount',
-                  labelText: 'Amount',
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.white,
-                        width: 0.75,
-                      ),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ))),
-              keyboardType: TextInputType.number,
-              onChanged: (str) {
-                setState(() {
-                  print(str);
-                  amountController.text = str;
-                });
-              },
-            ),),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 20),
+              child: TextField(
+                controller: amountController,
+                decoration: const InputDecoration(
+                    hintText: 'Type the note amount',
+                    labelText: 'Amount',
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 0.75,
+                        ),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ))),
+                keyboardType: TextInputType.number,
+                onChanged: (str) {
+                  setState(() {
+                    amountController.text = str;
+                  });
+                },
+              ),
+            ),
             TextField(
               controller: descriptionController,
               decoration: const InputDecoration(
                   hintText: 'Type here the note',
-                  labelText: 'Note description',
+                  labelText: 'Credit description',
                   border: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Colors.white,
@@ -143,9 +151,9 @@ class _NoteScreenState extends State<NoteScreen> {
                           id: widget.note?.id,
                           amount: numberValue!.toInt());
                       if (widget.note == null) {
-                        await DatabaseHelper.addNote(model);
+                        await DatabaseHelper.addCredit(model);
                       } else {
-                        await DatabaseHelper.updateNote(model);
+                        await DatabaseHelper.updateCredit(model);
                       }
 
                       Navigator.pop(context);

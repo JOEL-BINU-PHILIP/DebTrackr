@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         dividerColor: const Color(0xFF1B1A55),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(backgroundColor: Color(0xFF535C91) ,selectedItemColor: Colors.black)
       ),
-      home: BottomNavBar(),
+      home: const BottomNavBar(),
     );
   }
 }

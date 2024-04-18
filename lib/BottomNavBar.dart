@@ -1,8 +1,10 @@
-import 'package:debtrackr/CreditsScreen.dart';
-import 'package:debtrackr/DuesScreen.dart';
+import 'package:debtrackr/CreditsFeature/CreditsScreen.dart';
+import 'package:debtrackr/DuesFeature/DuesScreen.dart';
 import 'package:debtrackr/dashboardScreen.dart';
 import 'package:flutter/material.dart';
 class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }

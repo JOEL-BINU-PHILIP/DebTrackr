@@ -7,12 +7,14 @@ class DashboardCashWidget extends StatelessWidget {
       required this.buttonColor,
       required this.buttonBorderColor,
       required this.buttonText,
-      required this.moneyTextColor
+      required this.moneyTextColor,
+      required this.moneyamount
       });
   final Color buttonColor;
   final Color buttonBorderColor;
   final String buttonText;
   final Color moneyTextColor;
+  final String moneyamount;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +33,7 @@ class DashboardCashWidget extends StatelessWidget {
             style: style,
           ),
           Text(
-            "500rs",
+            moneyamount,
             style: TextStyle(
               color: moneyTextColor,
               fontSize: 30,

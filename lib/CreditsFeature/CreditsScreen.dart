@@ -1,10 +1,10 @@
 import 'package:debtrackr/DataModel/note_model.dart';
-import 'package:debtrackr/creditsAddScreen.dart';
+import 'package:debtrackr/CreditsFeature/creditsAddScreen.dart';
 import 'package:flutter/material.dart';
-import '../services/database_helper.dart';
-import '../widgets/note_widget.dart';
+import '../../services/database_helper.dart';
+import '../../widgets/note_widget.dart';
 class NotesScreen extends StatefulWidget {
-  const NotesScreen({Key? key}) : super(key: key);
+  const NotesScreen({super.key});
 
   @override
   State<NotesScreen> createState() => _NotesScreenState();
@@ -29,7 +29,7 @@ class _NotesScreenState extends State<NotesScreen> {
           child: const Icon(Icons.add),
         ),
         body: FutureBuilder<List<Note>?>(
-          future: DatabaseHelper.getAllNotes(),
+          future: DatabaseHelper.getAllCredits(),
           builder: (context, AsyncSnapshot<List<Note>?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
@@ -64,7 +64,7 @@ class _NotesScreenState extends State<NotesScreen> {
                                       MaterialStateProperty.all(
                                           Colors.red)),
                                   onPressed: () async {
-                                    await DatabaseHelper.deleteNote(
+                                    await DatabaseHelper.deleteCredit(
                                         snapshot.data![index]);
                                     Navigator.pop(context);
                                     setState(() {});
