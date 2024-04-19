@@ -1,4 +1,4 @@
-import 'package:debtrackr/DataModel/note_model.dart';
+import 'package:debtrackr/Models/note_model.dart';
 import 'package:debtrackr/services/database_helper.dart';
 import 'package:flutter/material.dart';
 

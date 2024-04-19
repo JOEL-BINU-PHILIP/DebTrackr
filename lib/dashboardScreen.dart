@@ -1,6 +1,9 @@
+import 'package:debtrackr/CreditsFeature/creditsAddScreen.dart';
+import 'package:debtrackr/DuesFeature/DueNoteScreen.dart';
 import 'package:debtrackr/services/database_helper.dart';
 import 'package:debtrackr/widgets/DashboardCashWidget.dart';
 import 'package:debtrackr/widgets/RoundActionButton.dart';
+import 'package:debtrackr/widgets/dialog_option.dart';
 import 'package:flutter/material.dart';
 
 class DashBoardScreen extends StatefulWidget {
@@ -101,16 +104,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text("Alert"),
-                            content: const Text("This is an alert dialog."),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: const Text("OK"),
-                              ),
+                          return SimpleDialog(
+                            title: const Center(child: Text("Add A Note")),
+                            children: [
+                              DialogOption(dialogText: "Add a Credit ", navigateTo: (){
+                                Navigator.push(context, MaterialPageRoute(builder:  (context) => const NoteScreen()));
+                              }),
+                              DialogOption(dialogText: "Add a Due ", navigateTo: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DueNoteScreen()));
+                              })
                             ],
                           );
                         },

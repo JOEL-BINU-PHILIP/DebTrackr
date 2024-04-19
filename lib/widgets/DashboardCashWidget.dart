@@ -40,13 +40,6 @@ class DashboardCashWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Text(
-            "see more details>>>>",
-            style: TextStyle(color: Color(0xFF9290C3)),
-          )
         ],
       ),
     );

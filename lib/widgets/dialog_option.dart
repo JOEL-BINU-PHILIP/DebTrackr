@@ -13,7 +13,7 @@ class DialogOption extends StatelessWidget {
       child: Container(
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.black,
+            color: const Color(0xFF9290C3),
             borderRadius: BorderRadius.circular(40),
             border: Border.all(
               style: BorderStyle.solid,
@@ -23,7 +23,7 @@ class DialogOption extends StatelessWidget {
         child: Center(
           child: Text(
             dialogText,
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.black),
           ),
         ),
       ),

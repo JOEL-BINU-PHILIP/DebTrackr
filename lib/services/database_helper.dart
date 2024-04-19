@@ -1,4 +1,4 @@
-import 'package:debtrackr/DataModel/note_model.dart';
+import 'package:debtrackr/Models/note_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 

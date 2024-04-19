@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:debtrackr/DataModel/note_model.dart';
+import 'package:debtrackr/Models/note_model.dart';
 
 class NoteWidget extends StatelessWidget {
   final Note note;
