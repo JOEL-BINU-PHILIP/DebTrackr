@@ -5,6 +5,7 @@ import 'package:path/path.dart';
 class DatabaseHelper {
   static const int _version = 1;
   static const String _dbName = "Notes.db";
+  
 
   static Future<Database> _getDB() async {
     return openDatabase(join(await getDatabasesPath(), _dbName),
@@ -93,4 +94,18 @@ static sumColumn(String columnName, String tableName) async {
   return Sqflite.firstIntValue(result) ?? 0;
 }
 
+  static Future<void> deleteAllDues() async {
+    final db = await _getDB();
+    await db.delete('Dues'); // Delete all rows from the 'Dues' table
+  }
+
+  static Future<void> deleteAllCredits() async {
+    final db = await _getDB();
+    await db.delete('Note'); // Delete all rows from the 'Dues' table
+  }
+
+  static void reset(){
+    deleteAllCredits();
+    deleteAllDues();
+  }
 }

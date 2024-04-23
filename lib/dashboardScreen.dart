@@ -24,6 +24,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     });
   }
 
+  void reset() async {
+    DatabaseHelper.reset();
+  }
+
   @override
   void initState() {
     getSum();
@@ -42,27 +46,40 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            const MaterialStatePropertyAll(Color(0xFF1B1A55)),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                15.0), // Adjust border radius as needed
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        PopupMenuButton(
+                          onSelected: (value) {
+                            reset();
+                            getSum();
+                            setState(() {});
+                          },
+                          itemBuilder: (BuildContext context) => [
+                            const PopupMenuItem(
+                              value: 'reset',
+                              child: Text('Reset'),
+                            ),
+                          ],
+                          icon: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: const BoxDecoration(
+                                color: Color(0xFF1B1A55),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                            child: const Icon(
+                              Icons.settings_outlined,
+                              size: 32,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.settings_outlined,
-                        size: 32,
-                        color: Colors.white,
-                      ),
+                        const SizedBox(
+                          width: 5,
+                        )
+                      ],
                     ),
-                    const SizedBox(
-                      width: 5,
-                    )
                   ],
                 ),
                 Padding(
@@ -107,12 +124,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           return SimpleDialog(
                             title: const Center(child: Text("Add A Note")),
                             children: [
-                              DialogOption(dialogText: "Add a Credit ", navigateTo: (){
-                                Navigator.push(context, MaterialPageRoute(builder:  (context) => const NoteScreen()));
-                              }),
-                              DialogOption(dialogText: "Add a Due ", navigateTo: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const DueNoteScreen()));
-                              })
+                              DialogOption(
+                                  dialogText: "Add a Credit ",
+                                  navigateTo: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const NoteScreen()));
+                                    
+                                  }),
+                              DialogOption(
+                                  dialogText: "Add a Due ",
+                                  navigateTo: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const DueNoteScreen()));
+                                  
+                                  })
                             ],
                           );
                         },

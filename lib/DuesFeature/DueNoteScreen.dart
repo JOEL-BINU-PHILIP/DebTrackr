@@ -14,22 +14,27 @@ class _DueNoteScreenState extends State<DueNoteScreen> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   final amountController = TextEditingController();
+     @override
+  void initState() {
+    super.initState();
+    if (widget.note != null) {
+      titleController.text = widget.note!.title;
+      descriptionController.text = widget.note!.description;
+      amountController.text = widget.note!.amount.toString();
+    }
+    super.initState();
+  }
   @override
   void dispose() {
     titleController.dispose();
     descriptionController.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     int? numberValue;
-    if (widget.note != null) {
-      titleController.text = widget.note!.title;
-      descriptionController.text = widget.note!.description;
-      amountController.text = widget.note!.amount.toString();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.note == null ? 'Add a Due' : 'Edit note'),
